@@ -2590,11 +2590,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b96a3b0f97bda409e17eb2f5b71b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tname: house
-  maxhp: 3
-  damage: 2
-  def: 1
+  oname: "\uC9D1"
   index: 1000
+  maxhp: 3
+  power: 0
+  def: 1
+  speed: 0
 --- !u!208 &208895716492293192
 NavMeshObstacle:
   m_ObjectHideFlags: 1

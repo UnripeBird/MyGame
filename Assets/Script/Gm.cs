@@ -5,7 +5,6 @@ using System.Linq;
 using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
-
 [Serializable]
 public struct objlist
 {
@@ -20,7 +19,7 @@ public struct selectinfo
 
 public class Gm : MonoBehaviour {
 
-    
+    public GameObject testgm;
     public GameObject cm;
     public GameObject target;
     public GameObject Td;
@@ -240,7 +239,7 @@ public class Gm : MonoBehaviour {
             if (Input.GetMouseButtonDown(0) && (EventSystem.current.IsPointerOverGameObject() == false))
 
             {
-
+                
                 sinfo = select(Input.mousePosition, "");
 
                 if (sinfo.g != null)
@@ -284,6 +283,7 @@ public class Gm : MonoBehaviour {
 
             if (Input.GetMouseButtonDown(1))
             {
+                
                 sinfo = select(Input.mousePosition, "");
                 if (sinfo.g != null)
                 {
@@ -367,8 +367,7 @@ public class Gm : MonoBehaviour {
         raycastall = Physics.RaycastAll(ray, 30).OrderBy(h => h.distance).ToArray();
         selectinfo s = new selectinfo();
         for (int i = 0; i < raycastall.Count(); i++)
-        {   
-            
+        {
             Debug.Log(raycastall[i].transform.gameObject.tag);
             if (raycastall[i].transform.gameObject.tag == tag || tag == "")
             {

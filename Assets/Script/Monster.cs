@@ -11,7 +11,7 @@ public class Monster : MonoBehaviour {
     GameObject Atarget = null;
 
     ArrayList ar;
-
+    
     bool bAttack = false;
     bool bAgent = true;
     float t=0;
@@ -32,35 +32,35 @@ public class Monster : MonoBehaviour {
 	void Update () {
 
         if (!bAttack)
-        {
-            if (!agent.isActiveAndEnabled && !arrived)
-                agent.enabled=true;
-            else if(arrived)
-                agent.enabled = false;
+        { 
             //Vector3 direction = (target.transform.position - transform.position).normalized;
             float distance = Vector3.Distance(transform.position, target.transform.position);
-            if (tdistance != distance && agent.isActiveAndEnabled)
+            if (tdistance != distance)
             {
                 tdistance = distance;
 
                 agent.SetDestination(target.transform.position);                
                 arrived = false;                
-            }
-
-            
+            }           
 
             if (distance < agent.stoppingDistance)
             {
                 arrived = true;
-                Debug.Log("a");
             }
             else
                 arrived = false;
 
             if (arrived)
+            {
+                agent.Stop();
+                
                 monster.GetComponent<Animator>().SetInteger("State", (int)state.idel);
+            }
             else
+            {
+                agent.Resume();
                 monster.GetComponent<Animator>().SetInteger("State", (int)state.work);
+            }
 
             
 
@@ -71,19 +71,15 @@ public class Monster : MonoBehaviour {
         }
         else
         {
-            if(agent.isActiveAndEnabled)
-            {
-                Debug.Log(agent.isActiveAndEnabled);
-                agent.enabled=false;
+            agent.Stop();
                 //agent.SetDestination(transform.position);
-            }
+            
 
             if (Atarget != null)
             {
                 
                 //agent.SetDestination(Atarget.transform.position);
                 Look(Atarget.transform.position);
-
                 //agent.Stop();
                 if (t == 0)
                 {

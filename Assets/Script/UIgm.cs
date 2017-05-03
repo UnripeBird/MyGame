@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class UIgm : MonoBehaviour {
 
     List<GameObject> Error_List;
-
+    AsyncOperation async=null;
     Color[] ErrorCol;
 
     public GameObject TowerButton;
@@ -274,6 +275,22 @@ public class UIgm : MonoBehaviour {
         ResourcesInt = _pValue;
     }
 
+    public void gamesave()
+    {
+    }
+
+    public void MainMenuButtonClick()
+    {
+        StartCoroutine(GameSceneChange());
+    }
+
+    IEnumerator GameSceneChange()
+    {
+        if (async == null)
+            async = SceneManager.LoadSceneAsync(0);
+
+        yield return null;
+    }
     /*public void testButton(int i)
     {
         if (i == 1) 

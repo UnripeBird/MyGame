@@ -34,7 +34,7 @@ public class xmlscript : MonoBehaviour
             // PC
             m_sCheckDevice = "PC";
             m_sXmlPath = Application.dataPath + "/Resources" + "/" + "TestXml01.xml";       // Asset 폴더 하위 Resources 폴더에 있어야 한다.(PC 버전과 같음)
-            //xml.Load(m_sXmlPath);                                                           // Xml을 읽는다.
+            xml.Load(m_sXmlPath);                                                           // Xml을 읽는다.
 #elif UNITY_ANDROID
 //AndRoid
         m_sCheckDevice = "Android";
@@ -45,10 +45,10 @@ public class xmlscript : MonoBehaviour
             //xmlLoad();            
         }
 
-        Debug.Log(m_sXmlPath);
+        //Debug.Log(m_sXmlPath);
         
         //fileName = Application.dataPath + "/Data/sample.xml";
-        xmlSave();
+        //xmlSave();
         //xmlLoad();
         
     }
