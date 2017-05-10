@@ -56,8 +56,6 @@ public class info : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-
-        hp = maxhp;
         InfoSet();
     }
 
@@ -104,25 +102,25 @@ public class info : MonoBehaviour
 
     public void Attack()
     {
-        if (hp > 0)
+        if (oinfo.hp > 0)
         {
-            hp--;
+            oinfo.hp--;
             //resize();
         }
 
-        if (hp <= 0)
+        if (oinfo.hp <= 0)
         {
             Destroy(gameObject);
         }
     }
     public void resize()
     {
-        Debug.Log((Vector3.one * (hp / maxhp)));
+        Debug.Log((Vector3.one * (oinfo.hp / oinfo.maxhp)));
         //if ((maxhp - hp)!=0)            
-        gameObject.transform.localScale = (Vector3.one * (hp / maxhp));
+        gameObject.transform.localScale = (Vector3.one * (oinfo.hp / oinfo.maxhp));
     }
-    public float GetMaxHp() { return maxhp; }
-    public float GetHp() { return hp; }
+    public float GetMaxHp() { return oinfo.maxhp; }
+    public float GetHp() { return oinfo.hp; }
 
 
 }

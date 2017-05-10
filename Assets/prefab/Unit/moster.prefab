@@ -668,7 +668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   oname: monster
   index: 2000
-  maxhp: 2
+  maxhp: 3
   power: 1
   def: 1
   speed: 1
