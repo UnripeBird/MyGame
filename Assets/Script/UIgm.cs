@@ -20,11 +20,14 @@ public class UIgm : MonoBehaviour {
     public GameObject PlayMenu;
     public GameObject ErrorParant;
     public GameObject ErrorText;
+    public GameObject ResourcesChangePanel;
 
     public Transform TowerContent;
     public Transform UnitContent;
 
     public Text ResourcesText;
+    public Text[] TextResources;
+    
 
     Gm Gm_sc;
 
@@ -35,12 +38,17 @@ public class UIgm : MonoBehaviour {
     private float ErrorTime;
 
     int ResourcesInt;
-    int NowResoures;
+    int[] Resources;
+    int NowResouresint;
+    int[] NowResoures;
     int ErrorCount;
 
     // Use this for initialization
     void Start () {
         Gm_sc = Gm.getgm();
+
+        Resources = new int[5];
+        NowResoures = new int[5];
 
         Error_List = new List<GameObject>();
 
@@ -61,15 +69,21 @@ public class UIgm : MonoBehaviour {
         TowerUnitMenuSwitch = true;
         UnitMenuList.SetActive(false);
 
-        NowResoures =  ResourcesInt = 0;
+        NowResouresint =  ResourcesInt = 0;
 
         ErrorCount = 0;
 
         ErrorTime = 0;
+
+        for (int i = 0; i < 5; i++) 
+        {
+            Resources[i] = 0;
+            NowResoures[i] = 0;
+        }
     }
 	
 	// Update is called once per frame
-	void Update () {
+	void Update () { /////////////////////////UPDATE
         //Debug.Log(TowerUnitMenu.GetComponent<RectTransform>().localPosition);
         Vector3 UIpo = TowerUnitMenu.GetComponent<RectTransform>().localPosition;
 
@@ -98,23 +112,45 @@ public class UIgm : MonoBehaviour {
             TowerUnitMenu.GetComponent<RectTransform>().localPosition = UIpo;
         }
 
-        if(NowResoures != ResourcesInt)
+        for (int i = 0; i < 5; i++)
+        {
+            if(NowResoures[i] != Resources[i])
+            {
+                int Val;
+                Val = Gm_sc.boo(Resources[i] - NowResoures[i]);
+
+                NowResoures[i] += Val * 7;
+
+                if (Val == 1 && NowResoures[i] > Resources[i])
+                {
+                    NowResoures[i] = Resources[i];
+                }
+                else if (Val == -1 && NowResoures[i] < Resources[i])
+                {
+                    NowResoures[i] = Resources[i];
+                }
+
+                TextResources[i].text = ":" + NowResoures[i];
+            }
+        }
+
+        if(NowResouresint != ResourcesInt)
         {
             int Val;
-            Val = Gm_sc.boo(ResourcesInt - NowResoures);
+            Val = Gm_sc.boo(ResourcesInt - NowResouresint);
 
-            NowResoures += Val * 7;
+            NowResouresint += Val * 7;
 
-            if (Val == 1 && NowResoures > ResourcesInt)
+            if (Val == 1 && NowResouresint > ResourcesInt)
             {
-                NowResoures = ResourcesInt;
+                NowResouresint = ResourcesInt;
             }
-            else if (Val == -1 && NowResoures < ResourcesInt)
+            else if (Val == -1 && NowResouresint < ResourcesInt)
             {
-                NowResoures = ResourcesInt;
+                NowResouresint = ResourcesInt;
             }
 
-            ResourcesText.text = "Resources : " + NowResoures;
+            ResourcesText.text = ":" + NowResouresint;
         }
 
         if(Time.time - ErrorTime > 4)
@@ -274,6 +310,10 @@ public class UIgm : MonoBehaviour {
     {
         ResourcesInt = _pValue;
     }
+    public void SetResources(int _pNum, int _pValue)
+    {
+        Resources[_pNum] = _pValue;
+    }
 
     public void gamesave()
     {
@@ -290,6 +330,20 @@ public class UIgm : MonoBehaviour {
             async = SceneManager.LoadSceneAsync(0);
 
         yield return null;
+    }
+
+    public void ButtonClickEvent(int Value)
+    {
+        switch (Value)
+        {
+            case 0: //ResourcesChangeButton
+                ResourcesChangePanel.SetActive(true);
+                break;
+            case 1: //ResourcesChangeExit
+                ResourcesChangePanel.SetActive(false);
+                break;
+
+        }
     }
     /*public void testButton(int i)
     {
