@@ -687,12 +687,12 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 16606773}
-  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
-  m_LocalPosition: {x: 9, y: 13, z: -9}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 1198464952}
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!1001 &17252562
 Prefab:
@@ -13623,7 +13623,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.2958351, y: 0.38914704}
   m_AnchorMax: {x: 0.6985823, y: 0.4922312}
-  m_AnchoredPosition: {x: 1.5000172, y: -0.000022888184}
+  m_AnchoredPosition: {x: 1.5000172, y: -0.000030517578}
   m_SizeDelta: {x: -1, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &875701427
@@ -18132,6 +18132,35 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 56e529119aaf4f84294f2d6084faa36f, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1198464951
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1198464952}
+  m_Layer: 0
+  m_Name: "\uC9C0\uC6B0\uC9C0\uB9D0\uAC83"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1198464952
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1198464951}
+  m_LocalRotation: {x: 0.35355338, y: -0.35355338, z: 0.1464466, w: 0.8535535}
+  m_LocalPosition: {x: 9, y: 13, z: -9}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 16606778}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 45, y: -45, z: 0}
 --- !u!1001 &1202675337
 Prefab:
   m_ObjectHideFlags: 0
@@ -23273,9 +23302,11 @@ MonoBehaviour:
   PlayMenu: {fileID: 1482569868}
   ErrorParant: {fileID: 1265950523}
   ErrorText: {fileID: 1762156773008590, guid: 36705b8d83ab9114ab3e4e998ae6306d, type: 2}
+  ResourcesChangePanel: {fileID: 0}
   TowerContent: {fileID: 2095156195}
   UnitContent: {fileID: 1644715411}
   ResourcesText: {fileID: 538440551}
+  TextResources: []
 --- !u!114 &1529561879
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -83,7 +83,7 @@ public class Tower : MonoBehaviour
                 case 3:
                     // 월드 좌표 기준 TargetDir 방향으로 BulletSpeed 속력으로 날아감
                     Projectile.GetComponent<Rigidbody>().velocity = transform.TransformDirection(TargetDir * BulletSpeed);
-                    Debug.Log(TargetDir);
+                    //Debug.Log(TargetDir);
                     break;
                 case 4:
                     // 두 번 연속 발사

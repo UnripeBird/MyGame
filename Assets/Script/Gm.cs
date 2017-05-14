@@ -42,8 +42,9 @@ public class Gm : MonoBehaviour {
 
     public int money;
     AnimatorControllerParameter p;
-        
-    
+
+    float cmMaxVectorX = 0, cmMaxVectorY = 0;
+
     selectinfo sinfo;
 
     static Gm gm;
@@ -108,15 +109,17 @@ public class Gm : MonoBehaviour {
 
                 else if (Input.touchCount > 1) // 확대
                 {
-                    if (Vector3.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position) < initTouchDist && cm.GetComponent<Camera>().orthographicSize <= 16f)
+                    if (Vector3.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position) < initTouchDist && cm.GetComponent<Camera>().orthographicSize <= 10.6f)
                     {
                         cm.GetComponent<Camera>().orthographicSize += 0.2f;
+                        
                     }
                     else if (Vector3.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position) > initTouchDist && cm.GetComponent<Camera>().orthographicSize >= 3f)
                     {
                         cm.GetComponent<Camera>().orthographicSize -= 0.2f;
+                        
                     }
-
+                    cm_correction();
                     initTouchDist = Vector3.Distance(Input.GetTouch(0).position, Input.GetTouch(1).position);
 
                 }
@@ -153,7 +156,13 @@ public class Gm : MonoBehaviour {
                                 bMapMove = true;
                             Vector2 v = touchedPos - Input.GetTouch(0).position;
 
-                            cm.GetComponent<Camera>().transform.position += new Vector3((v.x / 102.4f) - (v.y / 60f), 0, (v.x / 102.4f) + (v.y / 60f));
+                            
+
+                            //cm.GetComponent<Camera>().transform.position += new Vector3((v.x / 102.4f) - (v.y / 60f), 0, (v.x / 102.4f) + (v.y / 60f));
+                            cm.GetComponent<Camera>().transform.localPosition += new Vector3((v.x / 102.4f) , (v.y / 60f) );
+                            cm_correction();
+
+                            
                             touchedPos = Input.GetTouch(0).position;
 
                         }
@@ -238,10 +247,13 @@ public class Gm : MonoBehaviour {
         }
         else
         {
-            if (Input.GetMouseButtonDown(0) && (EventSystem.current.IsPointerOverGameObject() == false))
+            if (Input.GetMouseButtonUp(0))
+            {
+                touchedPos = Vector2.zero;
+            }else if (Input.GetMouseButton(0) && (EventSystem.current.IsPointerOverGameObject() == false))
 
             {
-                
+
                 sinfo = select(Input.mousePosition, "");
 
                 if (sinfo.g != null)
@@ -311,16 +323,16 @@ public class Gm : MonoBehaviour {
             {
                 // Zoom In
                 cm.GetComponent<Camera>().orthographicSize += 0.4f;
-                Debug.Log(cm.GetComponent<Camera>().orthographicSize);
+                
                 //cm.transform.position -= (Vector3.one * 0.1f);
 
             }
 
-            if (Input.GetAxis("Mouse ScrollWheel") > 0 && cm.GetComponent<Camera>().orthographicSize >= 3f)
+            else if (Input.GetAxis("Mouse ScrollWheel") > 0 && cm.GetComponent<Camera>().orthographicSize >= 3f)
             {
                 //cm.transform.position += (Vector3.one * 0.1f);
                 cm.GetComponent<Camera>().orthographicSize -= 0.4f;
-                Debug.Log(cm.GetComponent<Camera>().orthographicSize);
+                //Debug.Log(cm.GetComponent<Camera>().orthographicSize);
                 // Zoom Out
             }
         }
@@ -427,6 +439,22 @@ public class Gm : MonoBehaviour {
         g.transform.position = new Vector3(x, g.transform.position.y, z);
 
         return true;
+    }
+
+    void cm_correction()
+    {
+        cmMaxVectorX = ((21f - ((cm.GetComponent<Camera>().orthographicSize - 2.6f) / 0.4f)) * 0.71f);
+        cmMaxVectorY = ((21f - ((cm.GetComponent<Camera>().orthographicSize - 2.6f) / 0.4f)) * 0.4f);
+        float x = cm.GetComponent<Camera>().transform.localPosition.x, y = cm.GetComponent<Camera>().transform.localPosition.y;
+        if (Math.Abs(x) >= cmMaxVectorX)
+        {
+            x = Math.Sign(x) * cmMaxVectorX;
+        }
+        if (Math.Abs(y) >= cmMaxVectorY)
+        {
+            y = Math.Sign(y) * cmMaxVectorY;
+        }
+        cm.GetComponent<Camera>().transform.localPosition = new Vector3(x, y);
     }
 }
 

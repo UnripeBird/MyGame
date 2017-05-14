@@ -79,10 +79,15 @@ public class info : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (oinfo.hp <= 0)
-            die = true;
-        if(bHpbar)
-            Hpbar();
+        if (oinfo != null)
+        {
+            if (oinfo.hp <= 0)
+                die = true;
+            if (bHpbar)
+                Hpbar();
+        }
+        else
+            InfoSet();
     }
 
 
