@@ -16,7 +16,7 @@ public class Monster : MonoBehaviour {
     bool bAgent = true;
     float t=0;
     float delay = 1f;
-    enum state {idel =0,work,attack };
+    enum state {idel =0,work,attack , die = 10 };
     bool arrived = false;
 
     float tdistance = 0;
@@ -27,21 +27,31 @@ public class Monster : MonoBehaviour {
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = 1f;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
-        if (!bAttack)
-        { 
+    // Update is called once per frame
+    void Update() {
+        
+            if (GetComponent<info>().isDie())
+            {
+                monster.GetComponent<Animator>().SetInteger("State", (int)state.die);
+                GetComponent<BoxCollider>().enabled = false;
+                agent.Stop();                
+                GetComponent<info>().DestroyObj(1f);
+                this.enabled = false;
+            }        
+        
+
+        else if (!bAttack)
+        {
             //Vector3 direction = (target.transform.position - transform.position).normalized;
             float distance = Vector3.Distance(transform.position, target.transform.position);
             if (tdistance != distance)
             {
                 tdistance = distance;
 
-                agent.SetDestination(target.transform.position);                
-                arrived = false;                
-            }           
+                agent.SetDestination(target.transform.position);
+                arrived = false;
+            }
 
             if (distance < agent.stoppingDistance)
             {
@@ -53,7 +63,7 @@ public class Monster : MonoBehaviour {
             if (arrived)
             {
                 agent.Stop();
-                
+
                 monster.GetComponent<Animator>().SetInteger("State", (int)state.idel);
             }
             else
@@ -62,22 +72,22 @@ public class Monster : MonoBehaviour {
                 monster.GetComponent<Animator>().SetInteger("State", (int)state.work);
             }
 
-            
+
 
             // 현재 속도를 보관한다.
 
             //　목적지에 가까이 왔으면 도착.
-            
+
         }
         else
         {
             agent.Stop();
-                //agent.SetDestination(transform.position);
-            
+            //agent.SetDestination(transform.position);
+
 
             if (Atarget != null)
             {
-                
+
                 //agent.SetDestination(Atarget.transform.position);
                 Look(Atarget.transform.position);
                 //agent.Stop();
@@ -101,6 +111,8 @@ public class Monster : MonoBehaviour {
 
 
         }
+
+        
         
 	}
 

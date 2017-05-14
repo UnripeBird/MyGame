@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.AI;
 public class Spawn : MonoBehaviour {
 
     public GameObject obj;
@@ -21,9 +21,15 @@ public class Spawn : MonoBehaviour {
         }
         else if (Time.time >= t && cnt > 0)
         {
-            GameObject g = Instantiate(obj);
+            //Debug.Log(transform.position+ ""+ transform.localPosition );
+            GameObject g = Instantiate(obj);            
             g.transform.parent = gameObject.transform;
-            g.transform.localPosition = gameObject.transform.position;
+            //g.transform.localPosition = gameObject.transform.localPosition;
+            g.transform.localPosition = Vector3.zero;
+            g.GetComponent<NavMeshAgent>().enabled = true;
+            g.GetComponent<Monster>().enabled =  true;
+            
+            
             t = 0;
             cnt--;
         }
