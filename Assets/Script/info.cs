@@ -1,18 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class objinfo
 {
     public string name;
     public int index;
-    public int maxhp;
-    public int hp;
-    public int power;
-    public int def;
-    public int speed;
+    public float maxhp;
+    public float hp;
+    public float power;
+    public float def;
+    public float speed;
 
-    public void setInfo(string _name, int _index, int _maxhp, int _power, int _def, int _speed)
+    public void setInfo(string _name, int _index, float _maxhp, float _power, float _def, float _speed)
     {
         name = _name;
         index = _index;
@@ -29,7 +30,9 @@ public class objinfo
 
 public class info : MonoBehaviour
 {
-
+    public GameObject hpbar;
+    public bool die = false;
+    public bool bHpbar = true;
     /*
     float maxhp = 3f;
     float hp;
@@ -38,10 +41,12 @@ public class info : MonoBehaviour
     */
     public string oname;
     public int index;
-    public int maxhp;
+    public float maxhp;
     public int power;
     public int def;
     public int speed;
+
+
 
     float hp;
     /*
@@ -56,13 +61,28 @@ public class info : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        if (hpbar != null)
+        {
+            // 캔버스에
+            hpbar = Instantiate(hpbar);
+            hpbar.transform.parent = Gm.getgm().canvas.transform;
+            hpbar.transform.localScale = Vector3.one;
+            
+            //hpbar = Instantiate(hpbar);
+            //hpbar.transform.parent = transform.parent;
+            //hpbar.transform.localScale = Vector3.one;
+
+        }
         InfoSet();
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        if (oinfo.hp <= 0)
+            die = true;
+        if(bHpbar)
+            Hpbar();
     }
 
 
@@ -81,14 +101,14 @@ public class info : MonoBehaviour
     public void Attack(int dmg)
     {
         oinfo.hp -= (dmg - oinfo.def);
-        if (oinfo.hp <= 0)
-            Destroy(gameObject);
+        //if (oinfo.hp <= 0)
+        //    Destroy(gameObject);
     }
 
     // 디버프 받았을 때 상태 변화 함수
     public void Debuff(int val)
     {
-        int tspeed = oinfo.speed;
+        float tspeed = oinfo.speed;
         if (val == 0)
         {
             oinfo.speed = val;
@@ -110,7 +130,7 @@ public class info : MonoBehaviour
 
         if (oinfo.hp <= 0)
         {
-            Destroy(gameObject);
+            //Destroy(gameObject);
         }
     }
     public void resize()
@@ -122,5 +142,85 @@ public class info : MonoBehaviour
     public float GetMaxHp() { return oinfo.maxhp; }
     public float GetHp() { return oinfo.hp; }
 
+    public bool isDie()
+    {
+        return die;
+    }
+    // 캔버스 쓴거
+    void Hpbar()
+    {
+        if (hpbar != null)
+        {
+            if(Gm.getgm().cm.GetComponent<Camera>().orthographicSize <= 3.8f)
+            {
+                hpbar.transform.localScale = Vector3.one;
+            }
+            else
+            {
+                float f = 1f - (0.64f*( Gm.getgm().cm.GetComponent<Camera>().orthographicSize - 3.8f)/7.2f);
+                hpbar.transform.localScale = Vector3.one * f;
+            }
+            hpbar.transform.position = Gm.getgm().cm.GetComponent<Camera>().WorldToScreenPoint(transform.position + new Vector3(1f, 0,-1f));
 
+
+            if (oinfo.hp <= 0)
+            {
+                Destroy(hpbar);
+            }
+            else
+            {
+                float HPbarRatio=0 ;
+                if (oinfo.maxhp != 0)
+                {
+                    HPbarRatio = (oinfo.hp / oinfo.maxhp);
+                    //Vector3 HP = hpbar.transform.localPosition;
+                    //HP.x += 67 * HPbarRatio;
+                    //hpbar.transform.localPosition = HP;
+                    hpbar.transform.FindChild("hp").GetComponent<Image>().fillAmount = HPbarRatio;
+                        //new Vector3(HPbarRatio, hpbar.transform.localScale.y, hpbar.transform.localScale.z);
+
+                }
+            }
+        }
+    }
+    
+    /*
+    void Hpbar()
+    {
+        if (hpbar != null)
+        {
+            hpbar.transform.position = transform.localPosition; //+ new Vector3(0.5f, 0, -1.5f);
+
+
+            if (oinfo.hp <= 0)
+            {
+                Destroy(hpbar);
+            }
+            else
+            {
+                float HPbarRatio = 0;
+                if (oinfo.maxhp != 0)
+                {
+                    HPbarRatio = (oinfo.hp / oinfo.maxhp);
+                    Vector3 HP = hpbar.transform.position;
+                    HP.x += 67 * HPbarRatio;
+                    hpbar.transform.position = HP;
+                    hpbar.GetComponentInChildren<Transform>().localScale = new Vector3(HPbarRatio, hpbar.transform.localScale.y, hpbar.transform.localScale.z);
+                    hpbar.GetComponentInChildren<SpriteRenderer>().fi
+
+                }
+            }
+        }
+    }
+    */
+
+    public void DestroyObj(float f)
+    {
+        Invoke("DestroyObj", f);
+    }
+
+    public void DestroyObj()
+    {
+        Destroy(gameObject);
+    }
 }

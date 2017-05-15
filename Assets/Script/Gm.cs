@@ -24,6 +24,7 @@ public class Gm : MonoBehaviour {
     public GameObject target;
     public GameObject Td;
     public Animator a;
+    public Canvas canvas;
     //bool bTd = false;
     public objlist list;
     float x, z;
@@ -38,7 +39,8 @@ public class Gm : MonoBehaviour {
     private float initTouchDist;
 
     //GameObject g;
-    
+
+    public int money;
     AnimatorControllerParameter p;
         
     
@@ -305,10 +307,11 @@ public class Gm : MonoBehaviour {
             }
 
 
-            if (Input.GetAxis("Mouse ScrollWheel") < 0 && cm.GetComponent<Camera>().orthographicSize <= 16f)
+            if (Input.GetAxis("Mouse ScrollWheel") < 0 && cm.GetComponent<Camera>().orthographicSize <= 10.6f)
             {
                 // Zoom In
                 cm.GetComponent<Camera>().orthographicSize += 0.4f;
+                Debug.Log(cm.GetComponent<Camera>().orthographicSize);
                 //cm.transform.position -= (Vector3.one * 0.1f);
 
             }
@@ -317,6 +320,7 @@ public class Gm : MonoBehaviour {
             {
                 //cm.transform.position += (Vector3.one * 0.1f);
                 cm.GetComponent<Camera>().orthographicSize -= 0.4f;
+                Debug.Log(cm.GetComponent<Camera>().orthographicSize);
                 // Zoom Out
             }
         }

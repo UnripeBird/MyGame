@@ -6,6 +6,7 @@ public class Tower : MonoBehaviour
 {
     Transform ClosestEnemy;
     Transform Target;
+    public Transform Weapon;
     Vector3 Pos;
     Vector3 TargetDir;
     string Closesttag = "Enemy";
@@ -31,10 +32,20 @@ public class Tower : MonoBehaviour
 
     void Update()
     {
-        if (Target != null) // 타워 인식 범위에 타겟이 있을 경우 진입
+        if(GetComponent<info>().isDie())
         {
+            GetComponent<info>().DestroyObj();
+        }
+        else if (Target != null) // 타워 인식 범위에 타겟이 있을 경우 진입
+        {
+            if (Target.GetComponent<info>().isDie())
+            {
+                Target = null;
+                return;
+            }
+
             //transform.LookAt(Target);                           // 타워가 타겟을 쳐다봄
-            TargetDir = Target.position - transform.position;   // 타워로부터 해당 타겟 방향 정보 저장 
+            TargetDir = Target.position - Weapon.position;   // 타워로부터 해당 타겟 방향 정보 저장 
             if(StartTime==0)
                 StartTime = Time.time;
 
@@ -52,6 +63,7 @@ public class Tower : MonoBehaviour
             StartTime = 0;
             SkillTime = 0;
         }
+        
 
 
     }
@@ -60,7 +72,7 @@ public class Tower : MonoBehaviour
     void Skill()
     {
         // 발사체 생성 - transform.position(위치)에서 transform.rotation(형태)하게 날라갈 BulletFrefab(발사체)
-        GameObject Projectile = Instantiate(BulletPrefab, transform.position, transform.rotation) as GameObject;
+        GameObject Projectile = Instantiate(BulletPrefab, Weapon.position, transform.rotation) as GameObject;
         float x = Random.Range(transform.position.x - 50, transform.position.x + 50);           // 램덤 x 좌표 설정 
         float z = Random.Range(transform.position.z + 50, transform.position.z + TowerRange);   // 랜덤 z 좌표 설정(포탑 앞)
         if (TowerType == 1) // 공격형 타워일 때 진입
@@ -112,14 +124,17 @@ public class Tower : MonoBehaviour
                    작다면 ClosetDistValue에 Distance 값 저장 and 
                    ClosestEnemy(가장 가까운 적 정보)에 해당 적 정보 저장
                 4) 적 수만큼 반복하여 현재 타워로부터 가장 가까운 적 정보를 가지는 ClosestEnemy 값 구함  */
-            Pos = Enemy.transform.position;
-            Distance = (Pos - transform.position).sqrMagnitude;
-            if (Distance < TowerRange)
+            if (!Enemy.GetComponent<info>().isDie())
             {
-                if (Distance < ClosestDistValue)
+                Pos = Enemy.transform.position;
+                Distance = (Pos - transform.position).sqrMagnitude;
+                if (Distance < TowerRange)
                 {
-                    ClosestDistValue = Distance;
-                    ClosestEnemy = Enemy.transform;
+                    if (Distance < ClosestDistValue)
+                    {
+                        ClosestDistValue = Distance;
+                        ClosestEnemy = Enemy.transform;
+                    }
                 }
             }
         }
