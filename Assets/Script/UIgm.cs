@@ -21,12 +21,19 @@ public class UIgm : MonoBehaviour {
     public GameObject ErrorParant;
     public GameObject ErrorText;
     public GameObject ResourcesChangePanel;
+    public GameObject R_EChangePanel;
+    public GameObject E_RChangePanel;
+    public GameObject E_RResourceSelect;
 
     public Transform TowerContent;
     public Transform UnitContent;
 
     public Text ResourcesText;
+    public Text ResourcesText2;
+    public Text E_REnergyText;
     public Text[] TextResources;
+    public Text[] R_EResourcesText;
+    public Text[] E_RResourcesText;
     
 
     Gm Gm_sc;
@@ -36,19 +43,19 @@ public class UIgm : MonoBehaviour {
 
     private float timeScale;
     private float ErrorTime;
-
-    int ResourcesInt;
+    
     int[] Resources;
-    int NowResouresint;
     int[] NowResoures;
+    int[] R_EResource;
+    int ResourcesInt;
+    int NowResouresint;
+    int E_RResourceSelectint;
+    int E_REnergy;
     int ErrorCount;
 
     // Use this for initialization
     void Start () {
         Gm_sc = Gm.getgm();
-
-        Resources = new int[5];
-        NowResoures = new int[5];
 
         Error_List = new List<GameObject>();
 
@@ -74,11 +81,18 @@ public class UIgm : MonoBehaviour {
         ErrorCount = 0;
 
         ErrorTime = 0;
+        
+        Resources = new int[5];
+        NowResoures = new int[5];
+        R_EResource = new int[5];
+
+        E_RResourceSelectint = 0;
 
         for (int i = 0; i < 5; i++) 
         {
-            Resources[i] = 0;
+            Resources[i] = 10;
             NowResoures[i] = 0;
+            R_EResource[i] = 0;
         }
     }
 	
@@ -130,7 +144,7 @@ public class UIgm : MonoBehaviour {
                     NowResoures[i] = Resources[i];
                 }
 
-                TextResources[i].text = ":" + NowResoures[i];
+                E_RResourcesText[i].text = TextResources[i].text = ":" + NowResoures[i];
             }
         }
 
@@ -151,6 +165,7 @@ public class UIgm : MonoBehaviour {
             }
 
             ResourcesText.text = ":" + NowResouresint;
+            ResourcesText2.text = ":" + NowResouresint;
         }
 
         if(Time.time - ErrorTime > 4)
@@ -310,9 +325,9 @@ public class UIgm : MonoBehaviour {
     {
         ResourcesInt = _pValue;
     }
-    public void SetResources(int _pNum, int _pValue)
+    public void SetResources(int _pNum, int _pValue) // 자원 추가하는 함수 SetResources(자원번호,자원 증감량);
     {
-        Resources[_pNum] = _pValue;
+        Resources[_pNum] += _pValue;
     }
 
     public void gamesave()
@@ -332,17 +347,107 @@ public class UIgm : MonoBehaviour {
         yield return null;
     }
 
-    public void ButtonClickEvent(int Value)
+    public void ButtonClickEvent(int _pValue)
     {
-        switch (Value)
+        switch (_pValue)
         {
             case 0: //ResourcesChangeButton
                 ResourcesChangePanel.SetActive(true);
                 break;
             case 1: //ResourcesChangeExit
                 ResourcesChangePanel.SetActive(false);
+                E_REnergy = 0;
+                E_REnergyText.text = ":0";
+                for (int i = 0; i < 5; i++)
+                {
+                    R_EResource[i] = 0;
+                    R_EResourcesText[i].text = ":0";
+                }
                 break;
+            case 2: //R_EButton
+                R_EChangePanel.SetActive(true);
+                E_RChangePanel.SetActive(false);
+                break;
+            case 3: //E_RButton
+                E_RChangePanel.SetActive(true);
+                R_EChangePanel.SetActive(false);
+                break;
+        }
+    }
 
+    public void ChangePanelButton(int _pValue)
+    {
+        switch (_pValue)
+        {
+            case 0:
+            case 1:
+            case 2:
+            case 3:
+            case 4:
+            case 5:
+            case 6:
+            case 7:
+            case 8:
+            case 9:
+                if(_pValue % 2 == 0)        //+
+                {
+                    if (NowResoures[_pValue / 2] >= R_EResource[_pValue / 2] + 2) 
+                    {
+                        R_EResource[_pValue / 2] += 2;
+                    }
+                }
+                else if(_pValue % 2 == 1)   //-
+                {
+                    if (R_EResource[_pValue / 2] > 0)
+                    {
+                        R_EResource[_pValue / 2] -= 2;
+                    }
+                }
+                R_EResourcesText[_pValue / 2].text = ":" + R_EResource[_pValue / 2];
+                break;
+            case 10:
+                int SumNum = 0;
+                for (int i = 0; i < 5; i++)
+                {
+                    SumNum += R_EResource[i];
+                    Resources[i] -= R_EResource[i];
+                    R_EResource[i] = 0;
+                    R_EResourcesText[i].text = ":0";
+                }
+                
+                ResourcesInt += SumNum / 2;
+                break;
+            case 11: //Energy +
+                if(NowResouresint >= E_REnergy + 1)
+                {
+                    E_REnergy += 1;
+                    E_REnergyText.text = ":" + E_REnergy;
+                }
+                break;
+            case 12: //Energy -
+                if (E_REnergy > 0)
+                {
+                    E_REnergy -= 1;
+                    E_REnergyText.text = ":" + E_REnergy;
+                }
+                break;
+            case 13:
+            case 14:
+            case 15:
+            case 16:
+            case 17:
+                Vector3 vec3;
+                vec3 = E_RResourceSelect.GetComponent<RectTransform>().localPosition;
+                vec3.y = 190.0f - ((_pValue - 13.0f) * 87.0f);
+                E_RResourceSelect.GetComponent<RectTransform>().localPosition = vec3;
+                E_RResourceSelectint = _pValue - 13;
+                break;
+            case 18:
+                SetResources(E_RResourceSelectint, 2 * E_REnergy);
+                ResourcesInt -= E_REnergy;
+                E_REnergy = 0;
+                E_REnergyText.text = ":0";
+                break;
         }
     }
     /*public void testButton(int i)
