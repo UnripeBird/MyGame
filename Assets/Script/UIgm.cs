@@ -438,7 +438,7 @@ public class UIgm : MonoBehaviour {
             case 17:
                 Vector3 vec3;
                 vec3 = E_RResourceSelect.GetComponent<RectTransform>().localPosition;
-                vec3.y = 190.0f - ((_pValue - 13.0f) * 87.0f);
+                vec3.y = 216.0f - ((_pValue - 13.0f) * 105.0f);
                 E_RResourceSelect.GetComponent<RectTransform>().localPosition = vec3;
                 E_RResourceSelectint = _pValue - 13;
                 break;
