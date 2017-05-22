@@ -227,7 +227,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01b96a3b0f97bda409e17eb2f5b71b09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hpbar: {fileID: 1613309305075936, guid: 1947bc9c307343d4bbe704e00f684a3d, type: 2}
+  hpbar: {fileID: 1842322583258858, guid: d57be6ef9948d804680bf8aae2f4a7a7, type: 2}
   die: 0
   bHpbar: 1
   oname: tester
