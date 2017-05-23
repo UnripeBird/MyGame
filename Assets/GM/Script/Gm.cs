@@ -40,7 +40,8 @@ public class Gm : MonoBehaviour {
 
     //GameObject g;
 
-    public int money;
+    public int[] energy;
+
     AnimatorControllerParameter p;
 
     float cmMaxVectorX = 0, cmMaxVectorY = 0;
@@ -53,13 +54,13 @@ public class Gm : MonoBehaviour {
     {
         foreach(GameObject Tower in list.tower)
         {
-            if(Tower != null)
-                Tower.GetComponent<info>().InfoSet();
+     //       if(Tower != null)
+       //         Tower.GetComponent<info>().InfoSet();
         }
         foreach (GameObject Tower in list.unit)
         {
-            if (Tower != null)
-                Tower.GetComponent<info>().InfoSet();
+            //if (Tower != null)
+             //   Tower.GetComponent<info>().InfoSet();
         }
         gm = this;
     }
@@ -159,7 +160,7 @@ public class Gm : MonoBehaviour {
                             
 
                             //cm.GetComponent<Camera>().transform.position += new Vector3((v.x / 102.4f) - (v.y / 60f), 0, (v.x / 102.4f) + (v.y / 60f));
-                            cm.GetComponent<Camera>().transform.localPosition += new Vector3((v.x / 102.4f) , (v.y / 60f) );
+                            cm.GetComponent<Camera>().transform.localPosition += new Vector3((v.x / 102.4f) , (v.y / 60f) , (v.y / 60f));
                             cm_correction();
 
                             
@@ -366,9 +367,16 @@ public class Gm : MonoBehaviour {
 
         if (glist != null)
         {
-            GameObject g;
-            g = Instantiate<GameObject>(glist[n % 1000]);
-            g.transform.position = new Vector3(x, 0, z);
+            if (spend(glist[(n % 1000) - 1].GetComponent<info>().oinfo.cost, glist[(n % 1000) - 1].GetComponent<info>().oinfo.costtype))
+            {
+                GameObject g;
+                g = Instantiate<GameObject>(glist[(n % 1000) - 1]);
+                g.transform.position = new Vector3(x, 0, z);
+            }
+            else
+            {
+                /// 돈없다는 메시지좀 넣어줘
+            }
         }
 
         //g.GetComponent<MeshRenderer>().
@@ -456,6 +464,20 @@ public class Gm : MonoBehaviour {
         }
         cm.GetComponent<Camera>().transform.localPosition = new Vector3(x, y);
     }
+
+    bool spend(int cost,int costtype)
+    {
+        if(cost<=energy[costtype])
+        {
+            energy[costtype] -= cost;
+
+
+
+            return true;
+        }
+        return false;
+    }
+    
 }
 
  

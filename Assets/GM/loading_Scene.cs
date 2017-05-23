@@ -13,7 +13,7 @@ public class loading_Scene : MonoBehaviour {
 
     void Start()
     {
-        StartCoroutine(StartLoad("a"));
+        StartCoroutine(StartLoad("stage1"));
     }
     private void Update()
     {

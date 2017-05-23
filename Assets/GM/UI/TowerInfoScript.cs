@@ -52,9 +52,9 @@ public class TowerInfoScript : MonoBehaviour {
         TowerInfo_Sc = _pInfo;
         if (TowerInfo_Sc != null)
         {
-            TowerName.text = "Name : " + _pInfo.oname;
-            TowerAttactDamage.text = "Atk : " + _pInfo.power;
-            TowerArmor.text = "Def : " + _pInfo.def;
+            TowerName.text = "Name : " + _pInfo.oinfo.name;
+            TowerAttactDamage.text = "Atk : " + _pInfo.oinfo.power;
+            TowerArmor.text = "Def : " + _pInfo.oinfo.def;
         }
     }
 

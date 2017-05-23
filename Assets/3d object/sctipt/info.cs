@@ -3,6 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+
+
+[System.Serializable]
 public class objinfo
 {
     public string name;
@@ -12,20 +15,9 @@ public class objinfo
     public float power;
     public float def;
     public float speed;
-
-    public void setInfo(string _name, int _index, float _maxhp, float _power, float _def, float _speed)
-    {
-        name = _name;
-        index = _index;
-        hp = maxhp = _maxhp;
-        power = _power;
-        def = _def;
-        speed = _speed;
-    }
+    public int cost;
+    public int costtype;
 }
-
-
-
 
 
 public class info : MonoBehaviour
@@ -33,18 +25,12 @@ public class info : MonoBehaviour
     public GameObject hpbar;
     public bool die = false;
     public bool bHpbar = true;   
-    public string oname;
-    public int index;
-    public float maxhp;
-    public int power;
-    public int def;
-    public int speed;
 
     bool on = false;
     float tspeed, duration, startTime;
 
     float hp;
-    public objinfo oinfo;
+    public objinfo oinfo = new objinfo();
     // Use this for initialization
     void Start()
     {
@@ -60,7 +46,6 @@ public class info : MonoBehaviour
             //hpbar.transform.localScale = Vector3.one;
 
         }
-        InfoSet();
     }
 
     // Update is called once per frame
@@ -73,15 +58,6 @@ public class info : MonoBehaviour
             if (bHpbar)
                 Hpbar();
         }
-        else
-            InfoSet();
-    }
-
-
-    public void InfoSet()
-    {
-        oinfo = new objinfo();
-        oinfo.setInfo(oname, index, maxhp, power, def, speed);
     }
 
     // Use this for initialization

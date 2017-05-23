@@ -7,6 +7,7 @@ public class Tower : MonoBehaviour
     Transform ClosestEnemy;
     Transform Target;
     public Transform Weapon;
+    public Transform Head;
     Vector3 Pos;
     Vector3 TargetDir;
     string Closesttag = "Enemy";
@@ -41,8 +42,8 @@ public class Tower : MonoBehaviour
                 Target = null;
                 return;
             }
-
-            //transform.LookAt(Target);                           // 타워가 타겟을 쳐다봄
+            if(Head!=null)
+                Head.LookAt(Target);                           // 타워가 타겟을 쳐다봄
             TargetDir = Target.position - Weapon.position;   // 타워로부터 해당 타겟 방향 정보 저장 
             if(StartTime==0)
                 StartTime = Time.time;

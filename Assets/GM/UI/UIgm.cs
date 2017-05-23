@@ -44,7 +44,7 @@ public class UIgm : MonoBehaviour {
     private float timeScale;
     private float ErrorTime;
     
-    int[] Resources;
+    public int[] Resources;
     int[] NowResoures;
     int[] R_EResource;
     int ResourcesInt;
@@ -65,8 +65,8 @@ public class UIgm : MonoBehaviour {
         ErrorCol[2] = Color.green;
 
         info _info = new info();
-        _info.index = 2000;
-        _info.InfoSet();
+        _info.oinfo.index = 2000;
+        //_info.InfoSet();
 
         AddTowerMenu(Gm_sc.list.tower[0].GetComponent<info>());
         AddTowerMenu(Gm_sc.list.tower[1].GetComponent<info>());
@@ -82,7 +82,7 @@ public class UIgm : MonoBehaviour {
 
         ErrorTime = 0;
         
-        Resources = new int[5];
+        //Resources = new int[5];
         NowResoures = new int[5];
         R_EResource = new int[5];
 
@@ -90,10 +90,11 @@ public class UIgm : MonoBehaviour {
 
         for (int i = 0; i < 5; i++) 
         {
-            Resources[i] = 10;
+            //Resources[i] = 10;
             NowResoures[i] = 0;
             R_EResource[i] = 0;
         }
+        Resources = Gm_sc.energy;
     }
 	
 	// Update is called once per frame
@@ -125,7 +126,6 @@ public class UIgm : MonoBehaviour {
             UIpo.y = -555.0f;
             TowerUnitMenu.GetComponent<RectTransform>().localPosition = UIpo;
         }
-
         for (int i = 0; i < 5; i++)
         {
             if(NowResoures[i] != Resources[i])
@@ -281,12 +281,12 @@ public class UIgm : MonoBehaviour {
 
         Transform ParentObj = null;
 
-        if ((_pTinfo.index) / 1000 == 1) //(_pTinfo.index) / 1000 == 1
+        if ((_pTinfo.oinfo.index) / 1000 == 1) //(_pTinfo.index) / 1000 == 1
             ParentObj = TowerContent;
-        else if ((_pTinfo.index) / 1000 == 2)
+        else if ((_pTinfo.oinfo.index) / 1000 == 2)
             ParentObj = UnitContent;
 
-        TestSC.TowerInitailize(_pTinfo.index);
+        TestSC.TowerInitailize(_pTinfo.oinfo.index);
         if(ParentObj != null)
         TestObject.transform.SetParent(ParentObj);
 

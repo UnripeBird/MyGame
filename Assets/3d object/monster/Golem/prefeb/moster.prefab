@@ -682,12 +682,14 @@ MonoBehaviour:
   hpbar: {fileID: 1842322583258858, guid: d57be6ef9948d804680bf8aae2f4a7a7, type: 2}
   die: 0
   bHpbar: 1
-  oname: monster
-  index: 2000
-  maxhp: 10
-  power: 1
-  def: 1
-  speed: 1
+  oinfo:
+    name: golam
+    index: 1001
+    maxhp: 10
+    hp: 10
+    power: 1
+    def: 1
+    speed: 1
 --- !u!135 &135088541574832116
 SphereCollider:
   m_ObjectHideFlags: 1
