@@ -27974,7 +27974,7 @@ MonoBehaviour:
   canvas: {fileID: 1695748598}
   list:
     tower:
-    - {fileID: 1895231297547818, guid: ed96cd5f1e6fbae4cb14f4c2cc1387c1, type: 2}
+    - {fileID: 1538523873358306, guid: fa2ff5f32871c8d4f84d2533d1444708, type: 2}
     - {fileID: 1511319423503674, guid: 8713f5074af662e4fa3c5cdc7b3a8bd1, type: 2}
     unit: []
   money: 0
