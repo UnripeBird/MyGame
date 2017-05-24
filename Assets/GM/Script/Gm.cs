@@ -14,7 +14,7 @@ public struct objlist
 public struct selectinfo
 {
     public GameObject g;
-    public Vector2 p;
+    public Vector3 p;
 }
 
 public class Gm : MonoBehaviour {
@@ -27,7 +27,7 @@ public class Gm : MonoBehaviour {
     public Canvas canvas;
     //bool bTd = false;
     public objlist list;
-    float x, z;
+    float x, y,z;
     float check_x, check_z;
     private Touch tempTouchs;
     private Vector2 touchedPos;
@@ -142,7 +142,7 @@ public class Gm : MonoBehaviour {
                             if (sinfo.g != null)
                             {
                                 x = sinfo.p.x;
-                                z = sinfo.p.y;
+                                z = sinfo.p.z;
 
                                 if (check_x == x && check_z == z)
                                     bMove = true;
@@ -174,7 +174,7 @@ public class Gm : MonoBehaviour {
                             if (sinfo.g != null)
                             {
                                 x = sinfo.p.x;
-                                z = sinfo.p.y;
+                                z = sinfo.p.z;
                                 move(Td, x, z);
                                 //Td.transform.position = new Vector3(x, Td.transform.position.y, z);
                                 check_x = x;
@@ -214,7 +214,7 @@ public class Gm : MonoBehaviour {
                                     {
                                         if (check_x == x && check_z == z)
                                         {
-                                            Create(1000);
+                                            //Create(1000);
                                             TdState(false);
                                         }
                                         else
@@ -222,13 +222,16 @@ public class Gm : MonoBehaviour {
                                     }
                                     else
                                     {
-                                        x = sinfo.p.x;
-                                        z = sinfo.p.y;
-                                        move(Td, x, z);
-                                        //Td.transform.position = new Vector3(x, Td.transform.position.y, z);
-                                        TdState(true);
-                                        check_x = x;
-                                        check_z = z;
+                                        if (sinfo.p.y == -0.5f)
+                                        {
+                                            x = sinfo.p.x;
+                                            z = sinfo.p.z;
+                                            move(Td, x, z);
+                                            //Td.transform.position = new Vector3(x, Td.transform.position.y, z);
+                                            TdState(true);
+                                            check_x = x;
+                                            check_z = z;
+                                        }
                                     }
                                     break;
 
@@ -264,7 +267,7 @@ public class Gm : MonoBehaviour {
                         case "Plane":
                             gameObject.GetComponent<UIgm>().TowerInfoViewFalse();
                             x = sinfo.p.x;
-                            z = sinfo.p.y;
+                            z = sinfo.p.z;
                             Td.transform.position = new Vector3(x, Td.transform.position.y, z);
                             //Debug.Log("a");
                             if (Td.activeSelf)
@@ -276,7 +279,10 @@ public class Gm : MonoBehaviour {
                                 }
                             }
                             else
-                                TdState(true);
+                            {
+                                if (sinfo.p.y == -0.5f)
+                                    TdState(true);
+                            }
 
 
 
@@ -392,13 +398,14 @@ public class Gm : MonoBehaviour {
         selectinfo s = new selectinfo();
         for (int i = 0; i < raycastall.Count(); i++)
         {
-            Debug.Log(raycastall[i].transform.gameObject.tag);
-            if (raycastall[i].transform.gameObject.tag == tag || tag == "")
+
+            if (tag == "" || raycastall[i].transform.gameObject.CompareTag(tag) )
             {
                 x = ((int)(raycastall[i].point.x + boo(raycastall[i].point.x)) / 2) * 2;
+                y = raycastall[i].point.y;//((int)(raycastall[i].point.y + boo(raycastall[i].point.y)) / 2) * 2;
                 z = ((int)(raycastall[i].point.z + boo(raycastall[i].point.z)) / 2) * 2;
                 s.g =  raycastall[i].transform.gameObject;
-                s.p = new Vector2(x, z);
+                s.p = new Vector3(x, y,z);
                 return s;
             }
         }

@@ -15,9 +15,11 @@ public class Tower : MonoBehaviour
     float SkillTime;
     float StartTime = 0.5f;
 
+    public AudioClip []ac;
+
     [Range(1, 3)] // 1: 공격형 2: 방어형 3: 지원형
     public int TowerType;    
-    [Range(1, 5)] // Type 당 최대 5 종류
+    [Range(1, 10)] // Type 당 최대 5 종류
     public int TowerDetailType;
 
     public float TowerRange, SkillTimeSec, BulletSpeed;
@@ -42,8 +44,10 @@ public class Tower : MonoBehaviour
                 Target = null;
                 return;
             }
-            if(Head!=null)
+            if (Head != null)
+            {
                 Head.LookAt(Target);                           // 타워가 타겟을 쳐다봄
+            }
             TargetDir = Target.position - Weapon.position;   // 타워로부터 해당 타겟 방향 정보 저장 
             if(StartTime==0)
                 StartTime = Time.time;
@@ -61,6 +65,16 @@ public class Tower : MonoBehaviour
         {
             StartTime = 0;
             SkillTime = 0;
+            if(TowerDetailType==10)
+            {
+                if (GetComponent<AudioSource>().loop)
+                {
+                    GetComponent<AudioSource>().clip = ac[1];
+                    GetComponent<AudioSource>().loop = false;
+                    GetComponent<AudioSource>().Play();
+                    Weapon.GetComponent<FlameThrowerEffect>().stop();
+                }
+            }
         }
         
 
@@ -71,7 +85,9 @@ public class Tower : MonoBehaviour
     void Skill()
     {
         // 발사체 생성 - transform.position(위치)에서 transform.rotation(형태)하게 날라갈 BulletFrefab(발사체)
-        GameObject Projectile = Instantiate(BulletPrefab, Weapon.position, transform.rotation) as GameObject;
+        GameObject Projectile =null;
+        if (TowerDetailType!=10)
+            Projectile = Instantiate(BulletPrefab, Weapon.position, Weapon.rotation) as GameObject;
 
 		float x = Random.Range(TargetDir.x - 50, TargetDir.x + 50);   // 램덤 x 좌표 설정 
         float z = Random.Range(TargetDir.z - 50, TargetDir.z + 50);   // 랜덤 z 좌표 설정
@@ -84,6 +100,7 @@ public class Tower : MonoBehaviour
                 case 4: // 단거리 연사 공격 포탑
                     // 월드 좌표 기준 TargetDir 방향으로 BulletSpeed 속력으로 날아감
                     Projectile.GetComponent<Rigidbody>().velocity = transform.TransformDirection(TargetDir * BulletSpeed);
+                    GetComponent<AudioSource>().Play();
                     //Debug.Log(TargetDir);
                     break;
                 case 5: // 중단거리 다방향 공격 포탑
@@ -93,6 +110,13 @@ public class Tower : MonoBehaviour
                         transform.TransformDirection(new Vector3(x, TargetDir.y, z) * BulletSpeed);
                     Projectile.GetComponent<Rigidbody>().velocity =
                         transform.TransformDirection(new Vector3(x, TargetDir.y, z) * BulletSpeed);
+                    break;
+                case 10: //화염
+                    
+                    GetComponent<AudioSource>().clip = ac[0];
+                    GetComponent<AudioSource>().loop = true;
+                    GetComponent<AudioSource>().Play();
+                    Weapon.GetComponent<FlameThrowerEffect>().start();
                     break;
             }
         else                // 지원형 타워일 때 진입

@@ -6,6 +6,7 @@ public class Bullet : MonoBehaviour {
 
     public int Type, DetailType;
     public float Power, expRange;
+    public GameObject endeffect;
 
 	void Start ()
     {
@@ -20,7 +21,7 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerEnter(Collider other)
     {
-        if (Type == 1 && other.transform.tag == "Enemy")
+        if (Type == 1 && other.transform.CompareTag("Enemy"))
         {
             /* 공격형 타워가 날린 발사체에 충돌된 객체의 태그가 Enemy일 경우 진입
              세부 타입에 따라 발사체 충돌 시 충돌 적 상태 변화(+ 범위 적용), 이펙트 적용 */
@@ -41,8 +42,10 @@ public class Bullet : MonoBehaviour {
             else
                 other.GetComponent<info>().Attack(Power);   // 충돌한 적 HP 감소           
             Destroy(gameObject);   // 충돌 후 발사체 파괴
+            if (endeffect != null)
+                Instantiate(endeffect);
         }
-        else if (Type == 3 && other.transform.tag == "Enemy")
+        else if (Type == 3 && other.transform.CompareTag("Enemy"))
         {
             // 지원형 타워가 날린 발사체에 충돌된 객체의 태그가 Enemy일 경우 진입
             if (DetailType == 1)
@@ -54,6 +57,8 @@ public class Bullet : MonoBehaviour {
             else
                 other.GetComponent<info>().Debuff(Power, 3.0f);    // 충돌한 적 일시적 3초간 경직
             Destroy(gameObject);
+            if(endeffect !=null)
+                Instantiate(endeffect);
         }
     }
 }

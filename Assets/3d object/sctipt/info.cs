@@ -68,7 +68,10 @@ public class info : MonoBehaviour
     // 공격 받았을 때 상태 변화 함수
     public void Attack(float dmg)
     {
-        oinfo.hp -= (dmg - oinfo.def);
+        if (dmg > oinfo.def)
+            oinfo.hp -= (dmg - oinfo.def);
+        else if(oinfo.def>=dmg)
+            oinfo.hp -= 0.1f;
         //if (oinfo.hp <= 0)
         //    Destroy(gameObject);
     }

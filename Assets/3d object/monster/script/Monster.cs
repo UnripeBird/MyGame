@@ -70,9 +70,7 @@ public class Monster : MonoBehaviour {
             {
                 agent.Resume();
                 monster.GetComponent<Animator>().SetInteger("State", (int)state.work);
-            }
-
-
+            }            
 
             // 현재 속도를 보관한다.
 
@@ -123,6 +121,16 @@ public class Monster : MonoBehaviour {
             Atarget = other.gameObject;
             bAttack = true;
         }
+
+        
+    }
+
+    void OnParticleCollision(GameObject other)
+    {
+        if (other.transform.CompareTag("Flames"))
+        {
+            GetComponent<info>().Attack(1f);
+        }
     }
 
     void OnTriggerExit(Collider other)
@@ -142,5 +150,7 @@ public class Monster : MonoBehaviour {
         q.SetLookRotation(dir, Vector3.up);
         transform.rotation = q;
     }
+
+    
 
 }

@@ -124,3 +124,4 @@ MonoBehaviour:
   DetailType: 1
   Power: 2
   expRange: 0
+  endeffect: {fileID: 0}
