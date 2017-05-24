@@ -280,13 +280,13 @@ public class UIgm : MonoBehaviour {
         TowerButtonScript TestSC = TestObject.GetComponent<TowerButtonScript>();
 
         Transform ParentObj = null;
-
+        Debug.Log(_pTinfo.oinfo.index);
         if ((_pTinfo.oinfo.index) / 1000 == 1) //(_pTinfo.index) / 1000 == 1
             ParentObj = TowerContent;
         else if ((_pTinfo.oinfo.index) / 1000 == 2)
             ParentObj = UnitContent;
 
-        TestSC.TowerInitailize(_pTinfo.oinfo.index);
+        TestSC.TowerInitailize(_pTinfo);
         if(ParentObj != null)
         TestObject.transform.SetParent(ParentObj);
 

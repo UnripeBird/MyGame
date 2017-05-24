@@ -180,6 +180,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Weapon: {fileID: 0}
+  Head: {fileID: 0}
   TowerType: 1
   TowerDetailType: 1
   TowerRange: 100
@@ -201,9 +202,13 @@ MonoBehaviour:
   hpbar: {fileID: 1613309305075936, guid: 1947bc9c307343d4bbe704e00f684a3d, type: 2}
   die: 0
   bHpbar: 1
-  oname: tester
-  index: 1001
-  maxhp: 10
-  power: 2
-  def: 1
-  speed: 2
+  oinfo:
+    name: tower1
+    index: 1001
+    maxhp: 0
+    hp: 0
+    power: 0
+    def: 0
+    speed: 0
+    cost: 0
+    costtype: 0
