@@ -8,6 +8,8 @@ TagManager:
   - UI
   - Monster
   - Enemy
+  - Flames
+  - Lightning
   layers:
   - Default
   - TransparentFX

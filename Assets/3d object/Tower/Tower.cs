@@ -72,8 +72,13 @@ public class Tower : MonoBehaviour
                     GetComponent<AudioSource>().clip = ac[1];
                     GetComponent<AudioSource>().loop = false;
                     GetComponent<AudioSource>().Play();
-                    Weapon.GetComponent<FlameThrowerEffect>().stop();
+                    Weapon.GetComponent<EmissionModuleEffect>().stop();
                 }
+            }
+
+            if(TowerDetailType==9)
+            {
+                Weapon.GetComponent<EmissionModuleEffect>().stop();
             }
         }
         
@@ -86,7 +91,7 @@ public class Tower : MonoBehaviour
     {
         // 발사체 생성 - transform.position(위치)에서 transform.rotation(형태)하게 날라갈 BulletFrefab(발사체)
         GameObject Projectile =null;
-        if (TowerDetailType!=10)
+        if (TowerDetailType<=4)
             Projectile = Instantiate(BulletPrefab, Weapon.position, Weapon.rotation) as GameObject;
 
 		float x = Random.Range(TargetDir.x - 50, TargetDir.x + 50);   // 램덤 x 좌표 설정 
@@ -111,12 +116,19 @@ public class Tower : MonoBehaviour
                     Projectile.GetComponent<Rigidbody>().velocity =
                         transform.TransformDirection(new Vector3(x, TargetDir.y, z) * BulletSpeed);
                     break;
+                case 9: //전기
+
+                    Weapon.GetComponent<EmissionModuleEffect>().start();
+                    Projectile = Instantiate(Weapon.gameObject, Target.position, Weapon.rotation) as GameObject;
+                    Destroy(Projectile, 2f);
+                    break;
+
                 case 10: //화염
                     
                     GetComponent<AudioSource>().clip = ac[0];
                     GetComponent<AudioSource>().loop = true;
                     GetComponent<AudioSource>().Play();
-                    Weapon.GetComponent<FlameThrowerEffect>().start();
+                    Weapon.GetComponent<EmissionModuleEffect>().start();
                     break;
             }
         else                // 지원형 타워일 때 진입

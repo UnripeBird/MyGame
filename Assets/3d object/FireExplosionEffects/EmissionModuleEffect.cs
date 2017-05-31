@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FlameThrowerEffect : MonoBehaviour {
+public class EmissionModuleEffect : MonoBehaviour {
     
     public GameObject []g;
     int n;
