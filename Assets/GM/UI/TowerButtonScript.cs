@@ -8,12 +8,16 @@ public class TowerButtonScript : MonoBehaviour {
     int m_TowerIndex;
     public Button TowerButton;
     public Image TowerImage;
+    public Image TowerpriceImage;
     public Text TowerAtk;
     public Text TowerDef;
     public Text TowerName;
     public Text TowerLife;
     public Text Towerprice;
     UIgm UIgm_cs;
+
+    public Sprite[] resourceimage;
+
 
     // Use this for initialization
     void Start () {
@@ -32,7 +36,8 @@ public class TowerButtonScript : MonoBehaviour {
         TowerDef.text = "Def:" + _tinfo.oinfo.def;
         TowerName.text = "Name :" + _tinfo.oinfo.name;
         TowerLife.text = "Life :" + _tinfo.oinfo.maxhp;
-        Towerprice.text = "Price:";
+        Towerprice.text = "Price:   " + _tinfo.oinfo.cost;
+        TowerpriceImage.sprite = resourceimage[_tinfo.oinfo.costtype];
         TowerButton.onClick = new Button.ButtonClickedEvent();
         TowerButton.onClick.AddListener(delegate { UIgm_cs.TowerListButtonClick(m_TowerIndex); });
     }

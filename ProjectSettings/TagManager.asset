@@ -4,15 +4,8 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Plane
-  - UI
-  - Monster
-  - Enemy
   - Flames
-<<<<<<< HEAD
   - Lightning
-=======
->>>>>>> e43585747f627f90af3dc87ce2c27c6fbef08855
   layers:
   - Default
   - TransparentFX
