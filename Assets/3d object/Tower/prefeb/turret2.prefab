@@ -1115,7 +1115,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 5ddeffc778dc6974082fcc08f26fa71b, type: 3}
   TowerType: 1
   TowerDetailType: 10
-  TowerRange: 100
+  TowerRange: 15
   SkillTimeSec: 1
   BulletSpeed: 10
   BulletPrefab: {fileID: 1632961383642666, guid: 9311fd3084e5eae48897c528881cb61b,
