@@ -131,6 +131,10 @@ public class Monster : MonoBehaviour {
         {
             GetComponent<info>().Attack(1f);
         }
+        else if (other.transform.CompareTag("Lightning"))
+        {
+            GetComponent<info>().Attack(1f);
+        }
     }
 
     void OnTriggerExit(Collider other)

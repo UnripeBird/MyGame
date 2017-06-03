@@ -81,7 +81,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
+    <Compile Include="Assets\3d object\FireExplosionEffects\EmissionModuleEffect.cs" />
+=======
     <Compile Include="Assets\3d object\FireExplosionEffects\FlameThrowerEffect.cs" />
+>>>>>>> e43585747f627f90af3dc87ce2c27c6fbef08855
     <Compile Include="Assets\3d object\Tower\Bullet.cs" />
     <Compile Include="Assets\3d object\Tower\Tower.cs" />
     <Compile Include="Assets\3d object\Tower\gun\Sci Fi Assets\Simple SciFi Gun Turret Set\Scripts\CameraMouseDrag.cs" />
