@@ -21,3 +21,5 @@ EditorBuildSettings:
     path: Assets/GM/scecn/MainScene.unity
   - enabled: 1
     path: Assets/GM/scecn/stage1.unity
+  - enabled: 1
+    path: Assets/GM/scecn/stage2.unity

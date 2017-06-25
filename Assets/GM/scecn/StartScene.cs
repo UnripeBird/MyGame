@@ -66,6 +66,10 @@ public class StartScene : MonoBehaviour {
     {
         async_operation = Application.LoadLevelAsync("loading");
     }
+    public void Stage2Start()
+    {
+        async_operation = Application.LoadLevelAsync("stage2");
+    }
     public void SelectExit_Button()
     {
         setCanvas.enabled = false;
